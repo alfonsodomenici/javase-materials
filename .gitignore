@@ -1,0 +1,9 @@
+.DS_Store
+**/target
+**/nbproject
+**/build
+**/target
+**/dist
+.war
+.jar
+build.xml
