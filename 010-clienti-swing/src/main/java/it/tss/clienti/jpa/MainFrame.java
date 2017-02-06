@@ -5,17 +5,39 @@
  */
 package it.tss.clienti.jpa;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author tss
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private static EntityManager em;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        initDb();
+        loadClienti();
+    }
+
+    private void initDb() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        em = emf.createEntityManager();
+    }
+
+    private void loadClienti() {
+        tblClienti.setModel(new ClienteTableModel());
+    }
+
+    public static EntityManager getEm() {
+        return em;
     }
 
     /**
@@ -28,15 +50,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblClienti = new javax.swing.JTable();
+        cmdAd = new javax.swing.JButton();
+        cmdElimina = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuEsci = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestione Clienti/Ordini");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClienti.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -47,14 +71,31 @@ public class MainFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblClienti);
 
-        jButton1.setText("Aggiungi");
+        cmdAd.setText("Aggiungi/Modifica");
+        cmdAd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdAdActionPerformed(evt);
+            }
+        });
+
+        cmdElimina.setText("Elimina");
+        cmdElimina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdEliminaActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Esci");
-        jMenu1.add(jMenuItem1);
+        mnuEsci.setText("Esci");
+        mnuEsci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuEsciActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuEsci);
 
         jMenuBar1.add(jMenu1);
 
@@ -67,22 +108,55 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cmdAd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmdElimina)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmdAd)
+                    .addComponent(cmdElimina))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mnuEsciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuEsciActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnuEsciActionPerformed
+
+    private void cmdAdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAdActionPerformed
+        DlgCliente dlgCliente = new DlgCliente(this, true, getSelected());
+        dlgCliente.setLocationRelativeTo(this);
+        dlgCliente.setVisible(true);
+        ((ClienteTableModel) tblClienti.getModel()).refresh();
+    }//GEN-LAST:event_cmdAdActionPerformed
+
+    private void cmdEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEliminaActionPerformed
+        if (getSelected().getId() != null) {
+            ClienteManager.remove(getSelected().getId());
+            ((ClienteTableModel) tblClienti.getModel()).refresh();
+        }
+    }//GEN-LAST:event_cmdEliminaActionPerformed
+
+    private Cliente getSelected() {
+        Cliente cli = new Cliente();
+        if (tblClienti.getSelectedRow() != -1) {
+            Long cliente_id = (Long) tblClienti.getValueAt(tblClienti.getSelectedRow(), 0);
+            cli = ClienteManager.find(cliente_id);
+        }
+        return cli;
+    }
 
     /**
      * @param args the command line arguments
@@ -120,11 +194,13 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton cmdAd;
+    private javax.swing.JButton cmdElimina;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem mnuEsci;
+    private javax.swing.JTable tblClienti;
     // End of variables declaration//GEN-END:variables
+
 }

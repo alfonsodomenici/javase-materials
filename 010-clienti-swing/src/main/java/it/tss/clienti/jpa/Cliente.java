@@ -6,6 +6,8 @@
 package it.tss.clienti.jpa;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +32,8 @@ import javax.persistence.NamedQuery;
 @Entity
 public class Cliente implements Serializable{
 
+    
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
