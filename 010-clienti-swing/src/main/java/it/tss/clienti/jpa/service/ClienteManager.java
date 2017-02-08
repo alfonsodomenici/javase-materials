@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.clienti.jpa;
+package it.tss.clienti.jpa.service;
 
+import it.tss.clienti.jpa.presentation.MainFrame;
+import it.tss.clienti.jpa.entity.Cliente;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -38,7 +40,7 @@ public class ClienteManager {
         return getEm().find(Cliente.class, cliente_id);
     }
 
-    static void remove(Long id) {
+    public static void remove(Long id) {
         Cliente finded = find(id);
         getEm().getTransaction().begin();
         getEm().remove(finded);

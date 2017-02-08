@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.clienti.jpa;
+package it.tss.clienti.jpa.presentation;
 
+import it.tss.clienti.jpa.presentation.model.ClienteTableModel;
+import it.tss.clienti.jpa.service.ClienteManager;
+import it.tss.clienti.jpa.entity.Cliente;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
