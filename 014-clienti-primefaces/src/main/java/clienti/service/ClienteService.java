@@ -17,51 +17,55 @@ import javax.persistence.PersistenceContext;
  * @author tss
  */
 @Stateless
-@Named("clientiSrv")
 public class ClienteService {
-    
+
     @PersistenceContext
     EntityManager em;
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public List<Cliente> findAll(){
+    public List<Cliente> findAll() {
         return em.createNamedQuery("Cliente.all")
                 .getResultList();
     }
-    
-  
+
     /**
      * Crea un nuovo cliente su db con i dati passati come parametri
-     * 
+     *
      * @param ragsoc
      * @param ind
-     * @return 
+     * @return
      */
-    public Cliente save(String ragsoc,String ind){
+    public Cliente save(String ragsoc, String ind) {
         Cliente cliente = new Cliente(ragsoc);
         cliente.setIndirizzo(ind);
         return save(cliente);
     }
-    
+
     /**
      * Salva il cliente su db passato come parametro
+     *
      * @param tosave
-     * @return 
+     * @return
      */
-    public Cliente save(Cliente tosave){
+    public Cliente save(Cliente tosave) {
+        System.out.println(tosave);
         return em.merge(tosave);
     }
-    
+
     /**
-     * 
-     * @param id 
+     *
+     * @param id
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         Cliente finded = em.find(Cliente.class, id);
         em.remove(finded);
     }
-    
+
+    public Cliente find(Long id) {
+        return em.find(Cliente.class, id);
+    }
+
 }

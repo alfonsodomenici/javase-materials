@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titolo">Inserisci/Modifica Cliente</ui:define>
+    <ui:define name="content">
+        <h:form >
+            <h:panelGrid columns="1" > 
+                <h:inputHidden value="#{clienteBean.cliente.id}"/>
+                <h:outputLabel for="ragsoc" value="Ragione Sociale"/>
+                <p:inputText id="ragsoc" 
+                    value="#{clienteBean.cliente.ragioneSociale}"/>
+                <h:outputLabel for="ind" value="Indirizzo"/>
+                <p:inputText id="ind" 
+                             value="#{clienteBean.cliente.indirizzo}"/>
+                <p:commandButton  value="Salva" action="#{clienteBean.onSave()}"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

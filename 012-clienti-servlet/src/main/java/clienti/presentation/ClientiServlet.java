@@ -19,12 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tss
  */
-@WebServlet(urlPatterns = "/prova")
-public class ProvaServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/cliente")
+public class ClientiServlet extends HttpServlet {
 
     @Inject
     ClienteService clienteService;
-    
+
     @Override
     public void init() throws ServletException {
         super.init(); //To change body of generated methods, choose Tools | Templates.
@@ -39,19 +39,32 @@ public class ProvaServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       
-        StringBuilder sb = new 
-        StringBuilder("<html><head><title>Elenco Clienti </title></head>");
+
+        
+        StringBuilder sb = new StringBuilder("<html><head><title>Elenco Clienti </title></head>");
         sb.append("<body><table>");
-        for(Cliente cli : clienteService.findAll()){
+        for (Cliente cli : clienteService.findAll()) {
             sb.append("<tr>");
             sb.append("<td>" + cli.getId() + "</td>");
             sb.append("<td>" + cli.getRagioneSociale() + "</td>");
             sb.append("<td>" + cli.getIndirizzo() + "</td>");
             sb.append("</tr>");
         }
-        sb.append("</table></body></html>");
+        sb.append("</table><a href='index.html'>home</a></body></html>");
         resp.getWriter().println(sb.toString());
+        
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String prs = req.getParameter("rag_soc");
+        String pind = req.getParameter("ind");
+        Cliente c = new Cliente(prs);
+        c.setIndirizzo(pind);
+        clienteService.save(c);
+        resp.sendRedirect("index.html");
+    }
+    
+    
 
 }

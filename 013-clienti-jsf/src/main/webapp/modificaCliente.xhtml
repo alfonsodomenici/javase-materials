@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./template.xhtml">
+
+    <ui:define name="titolo">Inserisci/Modifica Cliente</ui:define>
+    <ui:define name="content">
+        <h:form styleClass="w3-container">
+            <h:panelGrid columns="1" > 
+                <h:inputHidden value="#{clienteBean.cliente.id}"/>
+                <h:outputLabel for="ragsoc" value="Ragione Sociale"/>
+                <h:inputText id="ragsoc" styleClass="w3-input" 
+                    value="#{clienteBean.cliente.ragioneSociale}"/>
+                <h:outputLabel for="ind" value="Indirizzo"/>
+                <h:inputText id="ind" styleClass="w3-input"
+                             value="#{clienteBean.cliente.indirizzo}"/>
+                <h:commandButton styleClass="w3-button w3-round-medium" value="Salva" action="#{clienteBean.onSave()}"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./template.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titolo">Elenco Clienti</ui:define>
+    <ui:define name="content">
+        <h:form >
+            <p:dataTable value="#{clienteBean.clienti}" 
+                         var="cli" style="margin: 0 auto;"
+                         rowKey="#{cli.id}"
+                            selectionMode="single"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="5">
+                <f:facet name="header">
+                    Elenco Clienti
+                </f:facet>
+                <p:column>
+                    <f:facet name="header">ID</f:facet>
+                    <h:outputText value="#{cli.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">RAG.SOC.</f:facet>
+                    <h:outputText value="#{cli.ragioneSociale}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">INDIRIZZO</f:facet>
+                    <h:outputText value="#{cli.indirizzo}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Operazioni</f:facet>
+                    <p:commandLink value="elimina"
+                        actionListener="#{clienteBean.onElimina(cli.id)}">
+                    </p:commandLink>
+                    <br/>       
+                    <p:commandLink value="modifica"
+                        action="#{clienteBean.onModifica(cli.id)}">
+                    </p:commandLink>
+                </p:column>
+                <f:facet name="footer">
+                    <p:link styleClass="listButton" outcome="index" value="Index" />
+                    <p:commandLink styleClass="listButton"  value="Nuovo" 
+                                   action="#{clienteBean.onNuovo()}" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

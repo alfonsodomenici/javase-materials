@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./template.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titolo">Elenco Clienti</ui:define>
+    <ui:define name="content">
+        <h:form >
+            <h:dataTable value="#{clienteBean.clienti}" 
+                         styleClass="w3-table w3-striped w3-bordered"
+                         var="cli" style="margin: 0 auto;">
+                <f:facet name="header">
+                    Elenco Clienti
+                </f:facet>
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    <h:outputText value="#{cli.id}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">RAG.SOC.</f:facet>
+                    <h:outputText value="#{cli.ragioneSociale}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">INDIRIZZO</f:facet>
+                    <h:outputText value="#{cli.indirizzo}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Operazioni</f:facet>
+                    <h:commandLink value="elimina"
+                        actionListener="#{clienteBean.onElimina(cli.id)}">
+                    </h:commandLink>
+                    <br/>       
+                    <h:commandLink value="modifica"
+                        action="#{clienteBean.onModifica(cli.id)}">
+                    </h:commandLink>
+                </h:column>
+                <f:facet name="footer">
+                    <h:link styleClass="listButton" outcome="index" value="Index" />
+                    <h:commandLink styleClass="listButton"  value="Nuovo" 
+                                   action="#{clienteBean.onNuovo()}" />
+                </f:facet>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

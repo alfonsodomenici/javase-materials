@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DettaglioOrdineEditDlg" widgetVar="DettaglioOrdineEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDettaglioOrdineTitle}">
+            <h:form id="DettaglioOrdineEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{dettaglioOrdineController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDettaglioOrdineLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{dettaglioOrdineController.selected.id}" title="#{bundle.EditDettaglioOrdineTitle_id}" />
+                        <p:outputLabel value="#{bundle.EditDettaglioOrdineLabel_ordine}" for="ordine" />
+                        <p:selectOneMenu id="ordine" value="#{dettaglioOrdineController.selected.ordine}" required="true" requiredMessage="#{bundle.EditDettaglioOrdineRequiredMessage_ordine}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ordineController.itemsAvailableSelectOne}"
+                                           var="ordineItem"
+                                           itemValue="#{ordineItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDettaglioOrdineLabel_prodotto}" for="prodotto" />
+                        <p:selectOneMenu id="prodotto" value="#{dettaglioOrdineController.selected.prodotto}" required="true" requiredMessage="#{bundle.EditDettaglioOrdineRequiredMessage_prodotto}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{prodottoController.itemsAvailableSelectOne}"
+                                           var="prodottoItem"
+                                           itemValue="#{prodottoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditDettaglioOrdineLabel_quantita}" for="quantita" />
+                        <p:inputText id="quantita" value="#{dettaglioOrdineController.selected.quantita}" title="#{bundle.EditDettaglioOrdineTitle_quantita}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{dettaglioOrdineController.update}" value="#{bundle.Save}" update="display,:DettaglioOrdineListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DettaglioOrdineEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DettaglioOrdineEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
