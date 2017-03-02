@@ -4,7 +4,7 @@
 **/build
 **/target
 **/dist
-**/node_modules
+node_modules/
 .war
 .jar
 build.xml
