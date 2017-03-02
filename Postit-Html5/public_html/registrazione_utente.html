@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registrati</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="w3.css" >
+    </head>
+    <body>
+         <div class="w3-bar w3-blue">
+            <a class="w3-bar-item w3-button" href="index.html">Home</a>
+            <a class="w3-bar-item w3-button" href="registrazione_utente.html">Registrati</a>
+            <a class="w3-bar-item w3-button" href="registrazione_post.html">Nuovo Postit</a>
+            <a class="w3-bar-item w3-button" href="elenco_post.html">Elenco Postit</a>
+        </div>
+        <form class="w3-container" method="POST" action="http://localhost:8080/PostIt/resources/users">
+            <label class="w3-label">Username</label>
+            <input class="w3-input" name="usr" type="text" placeholder="username.."/>
+            <label class="w3-label">Password</label>
+            <input class="w3-input" name="pwd" type="password" placeholder="password.." />
+            <label class="w3-label">Email</label>
+            <input class="w3-input" name="email" type="email" placeholder="mail.." />
+            <input type="submit" value="Invia" class="w3-button w3-round w3-margin-top" />
+        </form>
+    </body>
+</html>
