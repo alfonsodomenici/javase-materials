@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,18 +28,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author alfonso
  */
 @NamedQueries({
-    @NamedQuery(name = Postit.FIND_ALL,
-            query = "select e from Postit e order by e.dataCreazione DESC")
+    @NamedQuery(name = Messaggio.FIND_ALL,
+            query = "select e from Messaggio e order by e.dataCreazione DESC")
     ,
-    @NamedQuery(name = Postit.FIND_BY_USER,
-            query = "select e from Postit e where e.utente= :usr order by e.dataCreazione DESC")
+    @NamedQuery(name = Messaggio.FIND_BY_USER,
+            query = "select e from Messaggio e where e.utente= :usr order by e.dataCreazione DESC")
 })
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Postit implements Serializable {
+public class Messaggio implements Serializable {
 
-    public static final String FIND_ALL = "Postit.findAll";
-    public static final String FIND_BY_USER = "Postit.findByUser";
+    public static final String FIND_ALL = "Messaggio.findAll";
+    public static final String FIND_BY_USER = "Messaggio.findByUser";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,10 +59,10 @@ public class Postit implements Serializable {
     @JoinColumn(nullable = false)
     private Utente utente;
 
-    public Postit() {
+    public Messaggio() {
     }
 
-    public Postit(String titolo, String contenuto, Utente utente) {
+    public Messaggio(String titolo, String contenuto, Utente utente) {
         this.titolo = titolo;
         this.contenuto = contenuto;
         this.utente = utente;
@@ -123,7 +126,7 @@ public class Postit implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Postit other = (Postit) obj;
+        final Messaggio other = (Messaggio) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

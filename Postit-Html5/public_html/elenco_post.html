@@ -23,7 +23,7 @@
         <script >
             $(document).ready(function () {
                 $.ajax({
-                    url: "http://localhost:8080/PostIt/resources/postits/"
+                    url: "http://localhost:8080/PostIt/resources/messaggi/"
                 }).then(function (data) {
                     for (var i = 0; i < data.length; i++) {
                         $('#content').append(createPost(data[i]));
@@ -34,9 +34,9 @@
             function createPost(p) {
                 var ui = "<div class='w3-card-4'>";
                 ui = ui.concat("<header class='w3-container w3-light-grey w3-section'>"
-                        , "<h1>",
+                        , "<h2>",
                         p.titolo,
-                        "</h1>",
+                        "</h2>",
                         "</header>",
                         "<div class='w3-container'>",
                         "<p>"+p.contenuto+"</p>",

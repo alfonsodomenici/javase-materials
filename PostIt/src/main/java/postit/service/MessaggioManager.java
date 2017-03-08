@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import postit.entity.Postit;
+import postit.entity.Messaggio;
 import postit.entity.Utente;
 
 /**
@@ -17,36 +17,36 @@ import postit.entity.Utente;
  * @author alfonso
  */
 @Stateless
-public class PostitManager {
-
+public class MessaggioManager {
+  
     @PersistenceContext
     private EntityManager em;
 
-    public Postit save(Postit tosave) {
+    public Messaggio save(Messaggio tosave) {
         return em.merge(tosave);
     }
 
-    public void remove(Postit toremove) {
-        Postit find = em.find(Postit.class, toremove.getId());
+    public void remove(Messaggio toremove) {
+        Messaggio find = em.find(Messaggio.class, toremove.getId());
         em.remove(find);
     }
 
-    public List<Postit> findAll(){
-        return em.createNamedQuery(Postit.FIND_ALL)
+    public List<Messaggio> findAll(){
+        return em.createNamedQuery(Messaggio.FIND_ALL)
                 .getResultList();
     }
     
-    public List<Postit> findByUser(Long id){
-        return findByUser(em.find(Utente.class, id));
+    public List<Messaggio> findByUser(Long userId){
+        return findByUser(em.find(Utente.class, userId));
     }
     
-    public List<Postit> findByUser(Utente u){
-        return em.createNamedQuery(Postit.FIND_BY_USER)
+    public List<Messaggio> findByUser(Utente u){
+        return em.createNamedQuery(Messaggio.FIND_BY_USER)
                 .setParameter("usr", u)
                 .getResultList();
     }
 
-    public Postit findById(Long id) {
-         return em.find(Postit.class, id);
+    public Messaggio findById(Long id) {
+         return em.find(Messaggio.class, id);
     }
 }

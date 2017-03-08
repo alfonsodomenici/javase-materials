@@ -14,12 +14,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author alfonso
  */
+
+
 @NamedQueries({
   @NamedQuery(name = Utente.FIND_ALL,
       query = "select e from Utente e order by e.usr")
@@ -28,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
       query = "select e from Utente e where e.usr= :usr and e.pwd= :pwd")
 })
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class Utente implements Serializable {
 
@@ -76,6 +82,7 @@ public class Utente implements Serializable {
     this.usr = usr;
   }
 
+  
   public String getPwd() {
     return pwd;
   }
