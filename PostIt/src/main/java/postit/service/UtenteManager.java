@@ -6,8 +6,10 @@
 package postit.service;
 
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import postit.entity.Utente;
 
@@ -40,10 +42,16 @@ public class UtenteManager {
   }
 
   public Utente findByUserAndPwd(String usr, String pwd) {
-    return em.createNamedQuery(Utente.FIND_BY_USER_PWD, Utente.class)
-        .setParameter("usr", usr)
-        .setParameter("pwd", pwd)
-        .getSingleResult();
+    Utente result = null;
+    try {
+      result = em.createNamedQuery(Utente.FIND_BY_USER_PWD, Utente.class)
+          .setParameter("usr", usr)
+          .setParameter("pwd", pwd)
+          .getSingleResult();
+    } catch (NoResultException ex) {
+      //ignored
+    }
+    return result;
   }
 
   public Utente findById(Long id) {

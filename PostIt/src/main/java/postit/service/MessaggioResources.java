@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import postit.entity.Messaggio;
 
@@ -34,7 +35,7 @@ public class MessaggioResources {
   UtenteManager utenteManager;
 
   @GET
-  public List<Messaggio> all() {
+  public List<Messaggio> all( ) {
     return messaggioManager.findAll();
   }
 
