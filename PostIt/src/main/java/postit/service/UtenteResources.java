@@ -42,18 +42,21 @@ public class UtenteResources {
   UtenteManager utenteManager;
 
   @GET
+  @TokenNeeded
   public List<Utente> all() {
     return utenteManager.findAll();
   }
 
   @GET
   @Path("{id}")
+  @TokenNeeded
   public Utente find(@PathParam("id") Long id) {
     return utenteManager.findById(id);
   }
 
   @DELETE
   @Path("{id}")
+  @TokenNeeded
   public void delete(@PathParam("id") Long id) {
     utenteManager.remove(id);
   }
@@ -95,5 +98,5 @@ public class UtenteResources {
         .add("id_token", finded.getId())
         .build();
     return Response.ok(json).build();
-  }
+  } 
 }

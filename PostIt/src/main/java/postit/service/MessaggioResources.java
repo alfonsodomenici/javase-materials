@@ -15,7 +15,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import postit.entity.Messaggio;
 
@@ -35,23 +34,27 @@ public class MessaggioResources {
   UtenteManager utenteManager;
 
   @GET
-  public List<Messaggio> all( ) {
+  @TokenNeeded
+  public List<Messaggio> all() {
     return messaggioManager.findAll();
   }
 
   @GET
   @Path("{id}")
+  @TokenNeeded
   public Messaggio byId(@PathParam("id") Long id) {
     return messaggioManager.findById(id);
   }
 
   @GET
   @Path("user/{id}")
+  @TokenNeeded
   public List<Messaggio> byUser(@PathParam("id") Long id) {
     return messaggioManager.findByUser(id);
   }
 
   @POST
+  @TokenNeeded
   public void create(
       @FormParam("titolo") String titolo,
       @FormParam("contenuto") String contenuto,
