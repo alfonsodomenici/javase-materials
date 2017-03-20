@@ -8,6 +8,7 @@ package postit.service;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -25,23 +26,26 @@ import javax.ws.rs.ext.Provider;
 @Priority(Priorities.AUTHENTICATION)
 public class TokenNeededFilter implements ContainerRequestFilter {
 
-  @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
-    outHeaders(requestContext.getHeaders());
-    String id_token = requestContext.getHeaders().getFirst("id_token");
-    if(id_token==null || id_token.isEmpty()){
-      requestContext.
-          abortWith(Response.
-              status(Response.Status.UNAUTHORIZED).
-              build());
-    }
-  }
+    @Inject
+    TokenManager tokenManager;
 
-  private void outHeaders(MultivaluedMap<String, String> headers) {
-    headers.
-        keySet().
-        stream().
-        forEach(k -> System.out.println(k + " -> " + headers.get(k)));
-  }
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+        outHeaders(requestContext.getHeaders());
+        String token = requestContext.getHeaders().getFirst("id_token");
+        if (!tokenManager.validateToken(token)) {
+            requestContext.
+                    abortWith(Response.
+                            status(Response.Status.UNAUTHORIZED).
+                            build());
+        }
+    }
+
+    private void outHeaders(MultivaluedMap<String, String> headers) {
+        headers.
+                keySet().
+                stream().
+                forEach(k -> System.out.println(k + " -> " + headers.get(k)));
+    }
 
 }

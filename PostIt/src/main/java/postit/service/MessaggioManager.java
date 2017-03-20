@@ -26,8 +26,8 @@ public class MessaggioManager {
         return em.merge(tosave);
     }
 
-    public void remove(Messaggio toremove) {
-        Messaggio find = em.find(Messaggio.class, toremove.getId());
+    public void remove(Long id){
+        Messaggio find = em.find(Messaggio.class, id);
         em.remove(find);
     }
 
