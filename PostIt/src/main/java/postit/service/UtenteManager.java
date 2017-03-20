@@ -5,12 +5,15 @@
  */
 package postit.service;
 
+import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import postit.Security;
 import postit.entity.Utente;
 
 /**
@@ -24,6 +27,7 @@ public class UtenteManager {
   EntityManager em;
 
   public Utente save(Utente tosave) {
+    tosave.setPwd(Security.digestPassword(tosave.getPwd()));
     return em.merge(tosave);
   }
 
@@ -61,4 +65,6 @@ public class UtenteManager {
   public Utente getLogged() {
     return em.find(Utente.class, 1l);
   }
+  
+  
 }

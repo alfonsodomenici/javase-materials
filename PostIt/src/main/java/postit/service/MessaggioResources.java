@@ -6,6 +6,7 @@
 package postit.service;
 
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -67,7 +68,7 @@ public class MessaggioResources {
     @Path("{id}")
     @TokenNeeded
     public void update(@PathParam("id") Long id,Messaggio m) {
-        if(id!=m.getId()){
+        if(!Objects.equals(id, m.getId())){
             System.out.println("generare errore..");
         }
         m.setUtente(tokenManager.getCurrentUser());

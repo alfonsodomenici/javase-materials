@@ -6,6 +6,8 @@
 package postit.service;
 
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import postit.Security;
 import postit.entity.Utente;
 
 /**
@@ -68,16 +71,6 @@ public class UtenteResources {
   }
 
   @POST
-  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  public void create(@FormParam("usr") String usr,
-      @FormParam("pwd") String pwd,
-      @FormParam("email") String email) {
-
-    Utente u = new Utente(usr, pwd, email);
-    utenteManager.save(u);
-  }
-
-  @POST
   @Path("login")
   public Response login(Utente u) {
     if (u == null) {
@@ -86,7 +79,7 @@ public class UtenteResources {
           .build();
     }
     
-    Utente finded = utenteManager.findByUserAndPwd(u.getUsr(), u.getPwd());
+    Utente finded = utenteManager.findByUserAndPwd(u.getUsr(), Security.digestPassword(u.getPwd()));
     if (finded == null) {
       return Response.status(Response.Status.UNAUTHORIZED)
           .header("caused-by", "login failed")
@@ -99,4 +92,6 @@ public class UtenteResources {
         .build();
     return Response.ok(json).build();
   } 
+  
+  
 }
