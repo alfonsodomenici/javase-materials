@@ -45,9 +45,10 @@ public class MessaggioResources {
     UtenteManager utenteManager;
 
     @GET
+    @Path("utente/{id}")
     @TokenNeeded
-    public List<Messaggio> all() {
-        return messaggioManager.findByUser(tokenManager.getCurrentUser());
+    public List<Messaggio> all(@PathParam("id") Long id) {
+        return messaggioManager.findByUser(id);
     }
 
     @GET
