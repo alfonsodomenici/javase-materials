@@ -32,52 +32,53 @@ import postit.entity.Messaggio;
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class MessaggioResources {
 
-    @Inject
-    TokenManager tokenManager;
-    
-    @Context
-    HttpHeaders httpHeaders;
+  @Inject
+  TokenManager tokenManager;
 
-    @Inject
-    MessaggioManager messaggioManager;
+  @Context
+  HttpHeaders httpHeaders;
 
-    @Inject
-    UtenteManager utenteManager;
+  @Inject
+  MessaggioManager messaggioManager;
 
-    @GET
-    @TokenNeeded
-    public List<Messaggio> all() {
-        return messaggioManager.findByUser(tokenManager.getCurrentUser());
+  @Inject
+  UtenteManager utenteManager;
+
+  @GET
+  @TokenNeeded
+  public List<Messaggio> all() {
+    return messaggioManager.findAll();
+  }
+
+  @GET
+  @Path("utente/{id}")
+  @TokenNeeded
+  public List<Messaggio> byUtente(@PathParam("id") Long id) {
+    return messaggioManager.findByUser(id);
+  }
+
+  @POST
+  @TokenNeeded
+  public void create(Messaggio m) {
+    m.setUtente(tokenManager.getCurrentUser());
+    messaggioManager.save(m);
+  }
+
+  @PUT
+  @Path("{id}")
+  @TokenNeeded
+  public void update(@PathParam("id") Long id, Messaggio m) {
+    if (!Objects.equals(id, m.getId())) {
+      System.out.println("generare errore..");
     }
+    m.setUtente(tokenManager.getCurrentUser());
+    messaggioManager.save(m);
+  }
 
-    @GET
-    @Path("{id}")
-    @TokenNeeded
-    public Messaggio byId(@PathParam("id") Long id) {
-        return messaggioManager.findById(id);
-    }
-
-    @POST
-    @TokenNeeded
-    public void create(Messaggio m) {
-        m.setUtente(tokenManager.getCurrentUser());
-        messaggioManager.save(m);
-    }
-
-    @PUT
-    @Path("{id}")
-    @TokenNeeded
-    public void update(@PathParam("id") Long id,Messaggio m) {
-        if(!Objects.equals(id, m.getId())){
-            System.out.println("generare errore..");
-        }
-        m.setUtente(tokenManager.getCurrentUser());
-        messaggioManager.save(m);
-    }
-    @DELETE
-    @Path("{id}")
-    @TokenNeeded
-    public void delete(@PathParam("id") Long id) {
-        messaggioManager.remove(id);
-    }
+  @DELETE
+  @Path("{id}")
+  @TokenNeeded
+  public void delete(@PathParam("id") Long id) {
+    messaggioManager.remove(id);
+  }
 }
