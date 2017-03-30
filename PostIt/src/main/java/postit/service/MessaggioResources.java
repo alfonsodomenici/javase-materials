@@ -41,6 +41,8 @@ public class MessaggioResources {
   @Inject
   MessaggioManager messaggioManager;
 
+
+
   @GET
   @TokenNeeded
   public List<Messaggio> all() {
