@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.bilancino.business.spese.entity;
+package it.tss.bilancino.business.flussi.entity;
 
-import it.tss.bilancino.business.spese.boundary.ChangeEvent;
-import it.tss.bilancino.business.spese.entity.Flusso;
+import it.tss.bilancino.business.flussi.boundary.ChangeEvent;
+import it.tss.bilancino.business.flussi.entity.Flusso;
 import java.util.logging.Logger;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.bilancino.business.spese.boundary;
+package it.tss.bilancino.business.flussi.boundary;
 
-import it.tss.bilancino.business.spese.entity.Flusso;
+import it.tss.bilancino.business.flussi.entity.Flusso;
+import it.tss.bilancino.business.flussi.entity.FlussoPeriodico;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 /*
-curl -i -X POST -H "Content-Type: application/json" -d '{"importo":"200.00"}' http://localhost:8080/bilancino/resources/flussi
+curl -i -X POST -H "Content-Type: application/json" -d '{"importo":"200.00"}' http://localhost:8080/bilancino/resources/flussiPeriodici
 
 */
 
@@ -30,31 +31,37 @@ curl -i -X POST -H "Content-Type: application/json" -d '{"importo":"200.00"}' ht
  * @author tss
  */
 @Stateless
-@Path("flussi")
+@Path("flussiperiodici")
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public class FlussiResources {
+public class FlussoPeriodicoResources {
 
   @Inject
-  FlussoManager fm;
+  FlussoPeriodicoManager fm;
 
   @Inject
   Logger logger;
   
   @GET
-  public List<Flusso> all() {
-    logger.info("request all ...");
+  public List<FlussoPeriodico> all() {
     return fm.findAll();
   }
 
   @POST
-  public Response create(Flusso f) {
+  @Path("periodici")
+  public Response createPeriodico(FlussoPeriodico f) {
+    fm.save(f);
+    return Response.ok().build();
+  }
+  
+  @POST  
+  public Response create(FlussoPeriodico f) {
     fm.save(f);
     return Response.ok().build();
   }
 
   @PUT
   @Path("{id}")
-  public Response save(@PathParam("id") Long id, Flusso f) {
+  public Response save(@PathParam("id") Long id, FlussoPeriodico f) {
     fm.save(f);
     return Response.ok().build();
   }

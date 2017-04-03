@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.bilancino.business.spese.entity;
+package it.tss.bilancino.business.flussi.entity;
 
 import it.tss.bilancino.business.security.entity.Utente;
+import it.tss.bilancino.business.validation.ValidEntity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -57,7 +58,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @EntityListeners(FlussoAudit.class)
-public class Flusso implements Serializable {
+public class Flusso implements Serializable, ValidEntity {
 
   public final static String FIND_ALL = "Flusso.findAll";
   public final static String FIND_BY_UTENTE = "Flusso.findByUtente";
@@ -92,6 +93,44 @@ public class Flusso implements Serializable {
   @ManyToOne
   private Utente utente;
 
+  @Override
+  public boolean isValid() {
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 29 * hash + Objects.hashCode(this.id);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final Flusso other = (Flusso) obj;
+    if (!Objects.equals(this.id, other.id)) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    return "Flusso{" + "id=" + id + ", importo=" + importo + ", data=" + data + ", tags=" + tags + '}';
+  }
+
+  /*
+  get e set
+   */
   public Long getId() {
     return id;
   }
@@ -138,36 +177,6 @@ public class Flusso implements Serializable {
 
   public void setUtente(Utente utente) {
     this.utente = utente;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 5;
-    hash = 29 * hash + Objects.hashCode(this.id);
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final Flusso other = (Flusso) obj;
-    if (!Objects.equals(this.id, other.id)) {
-      return false;
-    }
-    return true;
-  }
-
-  @Override
-  public String toString() {
-    return "Flusso{" + "id=" + id + ", importo=" + importo + ", data=" + data + ", tags=" + tags + '}';
   }
 
 }

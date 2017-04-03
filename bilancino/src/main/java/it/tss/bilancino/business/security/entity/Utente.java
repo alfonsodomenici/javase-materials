@@ -5,6 +5,7 @@
  */
 package it.tss.bilancino.business.security.entity;
 
+import it.tss.bilancino.business.validation.ValidEntity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -23,8 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author alfonso
  */
-
-
 @NamedQueries({
   @NamedQuery(name = Utente.FIND_ALL,
       query = "select e from Utente e order by e.usr")
@@ -35,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Utente implements Serializable {
+public class Utente implements Serializable, ValidEntity {
 
   public static final String FIND_ALL = "Utente.findAll";
   public static final String FIND_BY_USER_PWD = "Utente.findByUserPwd";
@@ -66,37 +65,9 @@ public class Utente implements Serializable {
 
   private String email;
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUsr() {
-    return usr;
-  }
-
-  public void setUsr(String usr) {
-    this.usr = usr;
-  }
-
-  
-  public String getPwd() {
-    return pwd;
-  }
-
-  public void setPwd(String pwd) {
-    this.pwd = pwd;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
+  @Override
+  public boolean isValid() {
+    return true;
   }
 
   @Override
@@ -127,6 +98,41 @@ public class Utente implements Serializable {
   @Override
   public String toString() {
     return "Utente{" + "id=" + id + ", usr=" + usr + ", pwd=" + pwd + ", email=" + email + '}';
+  }
+
+  /*
+  get set
+   */
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getUsr() {
+    return usr;
+  }
+
+  public void setUsr(String usr) {
+    this.usr = usr;
+  }
+
+  public String getPwd() {
+    return pwd;
+  }
+
+  public void setPwd(String pwd) {
+    this.pwd = pwd;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
 }

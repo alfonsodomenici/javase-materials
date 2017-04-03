@@ -5,8 +5,9 @@
  */
 package it.tss.bilancino.business.logging.boundary;
 
-import it.tss.bilancino.business.spese.boundary.ChangeEvent;
-import it.tss.bilancino.business.spese.entity.Flusso;
+import it.tss.bilancino.business.flussi.boundary.ChangeEvent;
+import it.tss.bilancino.business.flussi.entity.Flusso;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
@@ -33,6 +34,6 @@ public class FlussiLogging {
   
   public void logDeletes(@Observes(during = TransactionPhase.AFTER_SUCCESS)
       @ChangeEvent(ChangeEvent.Type.DELETE) Flusso f){
-    logger.info("cancellato il flusso: " + f);
+    logger.log(Level.INFO, "cancellato il flusso: {0}", f);
   }
 }

@@ -28,13 +28,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * curl -i -X POST -H "Content-Type: application/json" -d
- * '{"usr":"mario","pwd":"secret"}'
- * http://localhost:8080/PostIt/resources/utenti/login
+ *
  *
  *
  *
  * @author alfonso
+ */
+
+/*
+curl -i -X POST -H "Content-Type: application/json" -d '{"usr":"mario","pwd":"secret"}' http://localhost:8080/bilancino/resources/utenti/login
  */
 @Stateless
 @Path("utenti")
@@ -78,7 +80,7 @@ public class UtenteResources {
           .header("caused-by", "nessun dato per effettuare la login")
           .build();
     }
-    
+
     Utente finded = utenteManager.findByUserAndPwd(u.getUsr(), Security.digestPassword(u.getPwd()));
     if (finded == null) {
       return Response.status(Response.Status.UNAUTHORIZED)
@@ -91,7 +93,6 @@ public class UtenteResources {
         .add("id_token", finded.getId())
         .build();
     return Response.ok(json).build();
-  } 
-  
-  
+  }
+
 }

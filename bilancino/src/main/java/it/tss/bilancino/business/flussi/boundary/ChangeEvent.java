@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.tss.bilancino.business.spese.boundary;
+package it.tss.bilancino.business.flussi.boundary;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
