@@ -1,10 +1,12 @@
 .DS_Store
-**/target
-**/nbproject
-**/build
-**/target
-**/dist
+target/
+nbproject/
+build/
+dist/
 node_modules/
 .war
 .jar
 build.xml
+bower_components/
+build/
+
