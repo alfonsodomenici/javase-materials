@@ -28,7 +28,7 @@ public class ClienteService {
      * @return 
      */
     public List<Cliente> findAll(){
-        return em.createNamedQuery("Cliente.all")
+        return em.createNamedQuery(Cliente.FIND_ALL)
                 .getResultList();
     }
     

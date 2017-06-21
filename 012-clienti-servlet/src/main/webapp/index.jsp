@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
         <title>Prova</title>
@@ -9,16 +11,10 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <ul class="w3-navbar w3-light-grey w3-border">
-            <li><a class="w3-green" href="#"><i class="fa fa-home"></i></a></li>
-            <li><a href="elenco_clienti.jsp"><i class="fa fa-search"></i></a></li>
-            <li><a href="ins_cliente.html"><i class="fa fa-id-card"></i></a></li>
-        </ul>
+        <c:import url="WEB-INF/include/menu.jsp"/>
         <div class="w3-panel w3-border w3-light-grey w3-round-large">
             <p>Customers manger....</p>
         </div> 
-        <footer class="w3-container w3-green">
-            <h5>powered by tss2017</h5>
-        </footer>
+        <c:import url="WEB-INF/include/footer.jsp"/>
     </body>
 </html>

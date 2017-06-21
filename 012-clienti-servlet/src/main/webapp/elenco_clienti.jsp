@@ -21,11 +21,12 @@
             <li><a class="w3-green" href="#"><i class="fa fa-search"></i></a></li>
             <li><a href="ins_cliente.html"><i class="fa fa-id-card"></i></a></li>
         </ul>
+        <p>Logged User : <c:out value="${sessionData.loggedUser}" /></p>
         <table class="w3-table w3-striped" >
             <th>ID</th>
             <th>RAGIONE SOCIALE</th>
             <th>INDIRIZZO</th>
-                <c:forEach items="${clientiSrv.findAll()}" var="cli">
+            <c:forEach items="${clientiSrv.findAll()}" var="cli">
                 <tr>
                     <td><c:out value="${cli.id}"/></td>
                     <td><c:out value="${cli.ragioneSociale}"/></td>

@@ -21,7 +21,7 @@ import javax.persistence.NamedQuery;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "Cliente.all",
+            name = Cliente.FIND_ALL,
             query = "select c from Cliente c order by c.ragioneSociale"),
     @NamedQuery(
             name = "Cliente.findByName",
@@ -30,6 +30,7 @@ import javax.persistence.NamedQuery;
 @Entity
 public class Cliente implements Serializable{
 
+    public static final String FIND_ALL = "Cliente.all";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
